@@ -50,10 +50,7 @@
               <div class="border-b pb-12">
                 <h2 class="text-base/7 font-semibold text-gray-100">Server Details</h2>
                 <p class="text-gray-100 mx-auto">
-                  Only one of Device ID and API Key are required.
-                  <br />
-                  If Device ID is specified, that will passed to the <code>/api/setup</code> endpoint to retrieve an API token.
-                  If API Key is specified, it will be used directly to call <code>/api/display</code>.
+                  If API Key is not specified, Device ID will passed to the <code>/api/setup</code> endpoint to retrieve it.
                 </p>
                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
@@ -83,8 +80,8 @@
             </div>
           
             <div class="mt-6 flex items-center justify-end gap-x-6">
-              <button type="button" onclick="stop()" class="text-sm/6 font-semibold text-gray-100">Stop</button>
-              <button type="button" onclick="start()" class="rounded-md bg-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-orange-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orangle-600">Start</button>
+              <button type="button" onclick="stop()" disabled class="rounded-md bg-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-orange-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orangle-600 disabled:bg-orange-400">Stop</button>
+              <button type="button" onclick="start()" class="rounded-md bg-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-orange-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orangle-600 disabled:bg-orange-400">Start</button>
             </div>
           </form>
         </div>

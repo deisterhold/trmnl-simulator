@@ -2,15 +2,23 @@
 var timeoutId = 0;
 var frequencyInMs = 15 * 60 * 1000; // 15 mins
 
-async function setup(server, deviceId) {
+async function setup(server) {
+    if (!server) {
+        return Promise.reject(new Error('API Server is not set.'));
+    }
+
+    // Grab Device ID
+    const deviceId = document.getElementById('device-id').value || '';
+
+    if (!deviceId) {
+        return Promise.reject(new Error('Device ID is required.'));
+    }
+
+    // Grab API Key
     const apiKey = document.getElementById('api-key').value || '';
 
     if (apiKey) {
         return Promise.resolve(apiKey);
-    }
-
-    if (!deviceId) {
-        return Promise.reject(new Error('Device ID is required if API key is not specified.'));
     }
 
     try {
@@ -57,7 +65,7 @@ async function display(server, deviceId, key) {
             headers: {
                 'ID': deviceId,
                 'Access-Token': key,
-                'Refresh-Rate': (frequencyInMs / 1000).toFixed(),
+                'Refresh-Rate': (frequencyInMs / 1000).toFixed()
             }
         });
 
@@ -87,7 +95,7 @@ async function display(server, deviceId, key) {
 
 async function loop(server, deviceId) {
     try {
-        const apiKey = await setup(server, deviceId);
+        const apiKey = await setup(server);
         
         await display(server, deviceId, apiKey);
 
@@ -102,8 +110,14 @@ function stop() {
     if (!timeoutId) return;
     
     console.log('Stopping...');
+    // Cancel any running timeout
     clearTimeout(timeoutId);
+    // Set tracker to zero to indicate nothing should be running
     timeoutId = 0;
+    // Disable stop button
+    document.querySelectorAll('button[type="button"]')[0].disabled = true;
+    // Enable start button
+    document.querySelectorAll('button[type="button"]')[1].disabled = false;
 }
 
 function start(firstRun = true) {
@@ -112,19 +126,49 @@ function start(firstRun = true) {
         return;
     }
 
-    if (firstRun) console.log('Starting...');
+    // firstRun should be true only when called by the user clicking the button
+    if (firstRun) {
+        console.log('Starting...');
+        // Enable stop button
+        document.querySelectorAll('button[type="button"]')[0].disabled = false;
+        // Disable start button
+        document.querySelectorAll('button[type="button"]')[1].disabled = true;
+    }
 
     timeoutId = setTimeout(() => {
         if (!timeoutId) {
             return;
         }
 
-        const server = document.getElementById('server').value || 'https://trmnl.app';
-        const deviceId = document.getElementById('device-id').value;
+        // Grab Server Base URL
+        const server = document.getElementById('server').value;
 
-        loop(server, deviceId).catch((err) => {
+        loop(server).catch((err) => {
             alert(err);
             stop();
         });
     }, firstRun ? 0 : frequencyInMs);
+}
+
+// Check for query params on page load
+window.onload = function() {
+    var parameters = new URLSearchParams(location.search);
+
+    const serverInput = document.getElementById('server');
+    const deviceIdInput = document.getElementById('device-id');
+    const apiKeyInput = document.getElementById('api-key');
+
+    // Populate Device ID and API Key fields
+    deviceIdInput.value = parameters.get('deviceId') || '';
+    apiKeyInput.value = parameters.get('apiKey') || '';
+
+    // Only set the server if passed so the default value isn't overwritten
+    if (parameters.has('server')) {
+        serverInput.value = parameters.get('server');
+    }
+
+    // If Server and Device ID are specified, start polling the API
+    if (serverInput.value && deviceIdInput.value) {
+        start();
+    }
 }
