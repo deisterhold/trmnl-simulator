@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.contain-paint {
+  contain: paint;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
+/* playlists#index */
+
+#playlistGroupsContainer {
+  counter-reset: playlist-counter;
+}
+
+.playlist-item {
+  counter-increment: playlist-counter;
+}
+
+.playlist-item .playlist-counter::before {
+  content: counter(playlist-counter);
+}
+
+.sortable-chosen .playlist-item .playlist-counter::before {
+  opacity: 0;
+}
+
+.playlist-item__ghost {
+  opacity: 0.1;
+}
+
+/* user-facing logs */
+.pagy {
+  justify-content: center;
+
+  @apply flex space-x-1 font-semibold text-sm text-gray-500;
+
+  a:not(.gap) {
+    @apply block rounded-lg px-3 py-1 bg-gray-200;
+    &:hover {
+      @apply bg-gray-300;
+    }
+    &:not([href]) { /* disabled links */
+      @apply text-gray-300 bg-gray-100 cursor-default;
+    }
+    &.current {
+      @apply text-white bg-primary-500;
+    }
+  }
+
+  label {
+    @apply inline-block whitespace-nowrap bg-gray-200 rounded-lg px-3 py-0.5;
+
+    input {
+      @apply bg-gray-100 border-none rounded-md;
+    }
+  }
+}
