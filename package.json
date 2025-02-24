@@ -1,0 +1,25 @@
+{
+  "name": "trmnl-simulator",
+  "version": "1.0.0",
+  "description": "A browser based simulator for the [TRMNL](https://usetrmnl.com/) e-ink message board.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deisterhold/trmnl-simulator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/deisterhold/trmnl-simulator/issues"
+  },
+  "homepage": "https://github.com/deisterhold/trmnl-simulator#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.50.1",
+    "@types/node": "^22.13.5"
+  }
+}
