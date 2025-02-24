@@ -7,7 +7,7 @@ Can be used to test different server implementations or as a virtual device whil
 
 ## Basic Use
 
-Specify the server URL or use the default, fill in your Device ID and optionally API Key, then click start.
+Specify the server URL or use the default, fill in your Device ID (MAC Address) and optionally API Key, then click start.
 The page will make a call to `/api/setup` to get an API key if not specified, then call `/api/display` every X seconds
 based on the interval you specified on the portal.
 

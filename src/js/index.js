@@ -4,14 +4,14 @@ var frequencyInMs = 15 * 60 * 1000; // 15 mins
 
 async function setup(server) {
     if (!server) {
-        return Promise.reject(new Error('API Server is not set.'));
+        return Promise.reject(new Error('Server is not populated.'));
     }
 
     // Grab Device ID
     const deviceId = document.getElementById('device-id').value || '';
 
     if (!deviceId) {
-        return Promise.reject(new Error('Device ID is required.'));
+        return Promise.reject(new Error('MAC Address is not populated.'));
     }
 
     // Grab API Key
@@ -51,11 +51,15 @@ async function setup(server) {
 
 async function display(server, deviceId, key) {
     if (!server) {
-        return Promise.reject(new Error('API Server is not set.'));
+        return Promise.reject(new Error('Server is not populated.'));
+    }
+
+    if (!deviceId) {
+        return Promise.reject(new Error('MAC Address is not populated.'));
     }
 
     if (!key) {
-        return Promise.reject(new Error('API Key is not set.'));
+        return Promise.reject(new Error('API Key is not populated.'));
     }
 
     try {
