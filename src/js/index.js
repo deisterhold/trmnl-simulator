@@ -160,6 +160,19 @@ function start(firstRun = true) {
     }, firstRun ? 0 : frequencyInMs);
 }
 
+function toggleFullScreen() {
+    if (!document.fullscreenElement) {
+        const screen = document.getElementById('screen');
+        console.log('Entering fullscreen...', screen);
+        screen.classList.remove('mix-blend-multiply');
+        screen.requestFullscreen();
+    } else if (document.exitFullscreen) {
+        console.log('Exiting fullscreen...');
+        screen.classList.add('mix-blend-multiply');
+        document.exitFullscreen();
+    }
+}
+
 // Check for query params on page load
 window.onload = function () {
     var parameters = new URLSearchParams(location.search);
