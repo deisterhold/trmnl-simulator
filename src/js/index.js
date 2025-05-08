@@ -21,7 +21,7 @@ async function setup(server) {
         return [deviceId, apiKey];
     }
 
-    const url = new URL('/api/setup', server);
+    const url = new URL('api/setup', ensureTrailingSlash(server));
     const resp = await fetch(url, {
         method: 'GET',
         headers: {
@@ -68,7 +68,7 @@ async function display(server, deviceId, key) {
         throw new Error('API Key is not populated.');
     }
 
-    const url = new URL('/api/display', server);
+    const url = new URL('api/display', ensureTrailingSlash(server));
     const resp = await fetch(url, {
         method: 'GET',
         headers: {
@@ -171,6 +171,10 @@ function toggleFullScreen() {
         screen.classList.add('mix-blend-multiply');
         document.exitFullscreen();
     }
+}
+
+function ensureTrailingSlash(url) {
+    return url.endsWith('/') ? url : url + '/';
 }
 
 // Check for query params on page load
