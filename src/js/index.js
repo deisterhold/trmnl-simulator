@@ -160,6 +160,33 @@ function start(firstRun = true) {
     }, firstRun ? 0 : frequencyInMs);
 }
 
+function next() {
+    console.log('Next...');
+    
+    const server = document.getElementById('server').value;
+    const deviceId = document.getElementById('device-id').value;
+    const apiKey = document.getElementById('api-key').value;
+    
+    if (!server) {
+        alert('Server is not populated.');
+        return;
+    }
+    
+    if (!deviceId) {
+        alert('MAC Address is not populated.');
+        return;
+    }
+    
+    if (!apiKey) {
+        alert('API Key is not populated.');
+        return;
+    }
+    
+    display(server, deviceId, apiKey).catch((err) => {
+        alert(err);
+    });
+}
+
 function toggleFullScreen() {
     if (!document.fullscreenElement) {
         const screen = document.getElementById('screen');
