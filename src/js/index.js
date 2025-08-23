@@ -74,7 +74,9 @@ async function display(server, deviceId, key) {
         headers: {
             'ID': deviceId,
             'Access-Token': key,
-            'Refresh-Rate': (frequencyInMs / 1000).toFixed()
+            'Refresh-Rate': (frequencyInMs / 1000).toFixed(),
+            'Battery-Voltage': '4.2',
+            'Rssi': '-45'
         }
     });
 
